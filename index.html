@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Library</title>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body ng-app="movieLibrary" ng-controller="MovieCtrl" ng-cloak>		
+	<md-toolbar>
+		<div class="md-toolbar-tools fixed">
+			<h1 layout-align-gt-sm="center">Movie Library</h1>
+		</div>
+	</md-toolbar>
+
+	<div layout="column" layout-gt-sm="row" layout-wrap>
+		<md-content flex-gt-sm="20" flex="100">
+				<!-- Search Bar -->
+				<div class="search">
+				<md-input-container layout-align="center">
+					<label><i class="fa fa-search" aria-hidden="true"></i> Search</label>
+					<input type="text" ng-model="search.title" ng-enter="fetchMovie(search.title)" value="search.title">
+				</md-input-container>
+				</div>
+				<div class="filter">
+				<h2 class="md-title">Search by Genre</h2>
+				<mg-content layout="column" layout-padding>
+					<md-select ng-model="genre" aria-label="true">
+					<md-option ng-repeat="genre in filters" value="{{genre}}">{{genre}}</md-option>
+					</md-select>
+				</mg-content>
+				</div>
+		</md-content>
+		<md-content class="md-padding" layout="row" layout-wrap flex-gt-sm="75" flex="100">
+			<md-card class="movies" ng-repeat="movie in movies | filter:search:strict | filter:genre" flex="45" flex-gt-md="30">
+				<a href="#editMovie" ng-click="saveEdit(movie)">
+				<h2 class="md-title">{{movie.title}}</h2>
+				<img ng-src="{{movie.poster}}">
+				<md-card-content>
+					<div class="movies-info">
+						<p><strong>Released : </strong><span>{{movie.released | date:'longDate'}}</span></p>
+						<p><strong>Genre : </strong><span> {{movie.genre}}</span></p>
+						<p><strong>Director : </strong><span>{{movie.director}}</span></p>
+						<p><strong>Actors : </strong><span >{{movie.actors}}</span></p>
+						<p><strong>Plot : </strong><span>{{movie.plot}}</span></p>
+					</div>
+				</md-card-content>
+				</a>
+		</md-content>
+	</div>
+
+	<div id="editMovie" class="overlay">
+		<div class="popup">
+			<div class="content">
+				<h1>{{movie.title}}</h1>
+				<md-content layout-padding layout="column">
+					<form>
+						<md-input-container>
+							<label for="title">Title</label>
+							<input type="text" id="title" md-autofocus ng-model="movie.title" required>
+						</md-input-container>
+						<md-input-container>
+							<label for="price">Released</label>
+							<input type="text" id="released" ng-model="movie.released" required>
+						</md-input-container>
+						<md-input-container>
+							<label for="description">Genre</label>
+							<input type="text" id="plot" ng-model="movie.plot" required>
+						</md-input-container>
+						<md-input-container>
+							<label for="image-link">Director</label>
+							<input type="text" id="director" ng-model="movie.director" required>
+						</md-input-container>
+						<md-input-container>
+							<label for="description">Actors</label>
+							<input type="text" id="actors" ng-model="movie.actors" required>
+						</md-input-container>
+						<md-input-container>
+							<label for="description">Plot</label>
+							<input type="text" id="plot" ng-model="movie.plot" required>
+						</md-input-container>
+						<a class="close" href="#">Save</a>
+					</form>
+				</md-content>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="movie.ctrl.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.12.0/lodash.min.js"></script>
+</body>
+</html>
